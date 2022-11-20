@@ -1,0 +1,14 @@
+.back-img
+{
+    background-image: url("../images/member-registration/1.jpg");
+ 
+}
+
+.logo
+{
+   margin-top: 10rem;
+}
+button.btn.btn-primary {
+    border: 5rem;
+}
+
