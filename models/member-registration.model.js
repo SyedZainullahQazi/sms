@@ -6,8 +6,8 @@ class memberRegister {
     static add_member(regObj) {
         console.log("add member scope");
 
-    
-        const memberRegistration = sequelize.define("members", 
+
+        const memberRegistration = sequelize.define("members",
         {
             fullname:
             {
@@ -34,6 +34,14 @@ class memberRegister {
                 type: DataTypes.STRING,
                 allowNull: false
             },
+            cgpa: {
+              type:DataTypes.FLOAT,
+              allowNull:false
+            },
+            whatsapp:{
+              type:DataTypes.STRING,
+              allowNull:false
+            },
             skills: {
                 type: DataTypes.STRING,
                 allowNull: false
@@ -43,11 +51,6 @@ class memberRegister {
                 allowNull: false
             },
             pendingStatus:
-            {
-                type:DataTypes.INTEGER,
-                allowNull:false
-            },
-            verStatus:
             {
                 type:DataTypes.INTEGER,
                 allowNull:false
@@ -62,11 +65,10 @@ class memberRegister {
                 type:DataTypes.STRING,
                 allowNull:false
             },
-           
+
         },{ timestamps: false},{createdAt: false},{updatedAt: false});
 
         memberRegistration.removeAttribute('id');
-      ;
 
         memberRegistration.create({
             fullname: regObj.fullname,
@@ -75,12 +77,13 @@ class memberRegister {
             rollnum: regObj.rollnum,
             email: regObj.email,
             password: regObj.password,
+            cgpa:regObj.cgpa,
+            whatsapp:regObj.whatsapp,
             skills: regObj.skills,
             gender: regObj.gender,
             pendingStatus:1,
-            verStatus:0,
-            profilePicture:"",
-            role:"Member"
+            profilePicture:"None",
+            role:"member"
         }).then(res => {
             console.log("Record Inserted Success");
         }).catch((error) => {

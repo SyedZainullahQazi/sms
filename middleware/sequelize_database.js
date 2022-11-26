@@ -9,7 +9,7 @@ const sequelize = new Sequelize(
   }
 );
 sequelize.authenticate().then(() => {
-    console.log('Database Connected Successfully....');
+    console.log('SEQUELIZE Database Connected Successfully....');
  }).catch((error) => {
     console.error('Unable to connect to the database: ', error);
  });

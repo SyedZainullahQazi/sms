@@ -5,10 +5,11 @@ const bodyParser=require("body-parser");
 
 class memberRegistration
 {
-    
+
 
     static render_memberRegistration=function(req,res)
     {
+       req.session.user="x";
        res.render("member-registration.ejs");
     }
 
@@ -21,9 +22,11 @@ class memberRegistration
             fullname:req.body.fullname,
             dob:req.body.dob,
             team:req.body.team,
-            rollnum:req.body.team,
+            rollnum:req.body.rollnum,
             email:req.body.email,
             password:req.body.password,
+            cgpa:req.body.cgpa,
+            whatsapp:req.body.whatsapp,
             skills:req.body.skills,
             gender:req.body.gender
         };
