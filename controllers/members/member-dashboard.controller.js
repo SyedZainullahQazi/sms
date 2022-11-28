@@ -14,7 +14,7 @@ class memberDash
 
     static render_memberDash(req,res)
     {
-        res.render("member-dashboard.ejs");
+        res.render("./member/member-dashboard.ejs");
     }
 }
 

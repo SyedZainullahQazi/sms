@@ -1,13 +1,13 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("../middleware/sequelize_database.js");
+const sequelize = require("../../middleware/sequelize_database");
 
 
-class memberRegister {
+class addMemberDB {
     //---------------------------------------------------------//
     // ADDS THE SENT MEMBER OBJECT TO THE DATABASE             //
     //---------------------------------------------------------//
     static add_member(regObj) {
-        const memberRegistration = sequelize.define("members",
+        const admin_add_member = sequelize.define("members",
         {
             fullname:
             {
@@ -86,10 +86,11 @@ class memberRegister {
             role:"member"
         }).then(res => {
             console.log("Member Has been Added To the Database");
+
         }).catch((error) => {
             console.error('Failed to add the member to the database ', error);
         });
     }
 }
 
-module.exports = memberRegister;
+module.exports = addMemberDB;

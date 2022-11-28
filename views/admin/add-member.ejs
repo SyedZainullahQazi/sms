@@ -1,27 +1,20 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
     <head>
-        <title>Member Registration Form</title>
-        <meta charset="utf-8">
-
-        <!--Bootstraps-->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <!--Fonts-->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-        <!--StyleSheet-->
-        <link rel="stylesheet" href="../public/styles/member-registration.css">
-    </head>
+       <title>ADD MEMBERS | FCAP</title>
+       <meta charset="utf-8"> 
+    </head> 
     <body>
+        <%- include('../partials/admin/header') -%>
         <div class="row">
+            <div class="col-sm-2" >
 
 
-
-            <div class="col-sm-6" style="padding-left:6rem;">
+            </div>
+            <div class="col-sm-6" >
                 <h1 style="color:#937DC2;font-family: 'Anton', sans-serif;text-align:center;">FCAP MEMBERSHIP FORM</h1>
                 <!--FORM -->
-                <form action="/member-registration" method="post">
+                <form action="/add-member" method="post">
 
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">NAME</label>
@@ -105,30 +98,24 @@
 
 
                     <center>
-                    <button type="submit" class="btn btn-outline-info" style="padding-left:10.5rem;padding-right:10.5rem;text-align:center;">Register</button>
+                    <button type="submit" class="btn btn-primary" style="padding-left:15.5rem;padding-right:15.5rem;text-align:center;">Register</button>
                     </center>
+                  
                 </form>
-
+                
             </div>
+            <div class="col-sm-2" >
 
-            <div class="col-sm-6 back-img" style='background-color:#1363DF;text-align: center;'>
-                <img src="../public/images/logo.png" alt="FCAP LOGO" width="200" height="200"  class="logo">
-                <p style="color:#937DC2">FCAP is a student blub for App development and programming.Our Goal
-                   is to work for technical awareness of the student body and expand the
-                   skill base of our members through various activities.</p>
-                   <form method="get" action="/signin">
-                   <center>
-                    <button type="submit" class="btn btn-outline-info" style="padding-left:2.5rem;padding-right:2.5rem;text-align:center;">signin</button>
-                    </center>
-                    </form>
+                
             </div>
         </div>
+        
+        
 
 
 
-        <!--Bootstraps-->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+        <%- include('../partials/admin/footer') -%>
     </body>
 </html>

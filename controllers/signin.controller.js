@@ -10,9 +10,12 @@ class siginController
 
     static render_signin=function(req,res)
     {
-        req.session.isAuth=false;
-        req.session.role="";
-        res.render("student_login.ejs");
+        if(req.session.isAuth==true && req.session.role=="admin")
+        {res.render("./admin/admin-dashboard.ejs");}
+        else if(req.session.isAuth==true && req.session.role=="member")
+        {res.render("./admin/member-dashboard.ejs");}
+        else
+        {res.render("student_login.ejs");}
     }
     //--------------------------------------------//
     //Authenticate User Pass and role and redirect//
@@ -27,16 +30,22 @@ class siginController
           if(rows[0].password==password)
           {
             req.session.isAuth=true;
+            req.session.rollnum=rows[0].rollnum;
+            req.session.fullname=rows[0].fullname;
+
+
             if(rows[0].role=="member")
             {
               req.session.role="member";
-              res.redirect("/member-dashboard")
+              res.redirect("member-dashboard");
             }
-            else if(role[0].role=="admin")
+            else if(rows[0].role=="admin")
             {
+              
               req.session.role="admin";
+              res.redirect("admin-dashboard");
             }
-            else if(role[0].role=="mentor")
+            else if(rows[0].role=="mentor")
             {
               req.session.role="mentor";
             }

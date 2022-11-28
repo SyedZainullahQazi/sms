@@ -9,7 +9,6 @@ class memberRegistration
 
     static render_memberRegistration=function(req,res)
     {
-       req.session.user="x";
        res.render("member-registration.ejs");
     }
 
@@ -31,6 +30,7 @@ class memberRegistration
             gender:req.body.gender
         };
         member_registration.add_member(inductionReq);
+        res.redirect("/signin");
     }
 }
 

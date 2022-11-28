@@ -6,7 +6,7 @@ var q = require('q');
     static checkUser(email,password)
     {
       var deferred = q.defer();
-      var Query='SELECT password,role FROM `members` WHERE email=?';
+      var Query='SELECT password,role,rollnum,fullname FROM `members` WHERE email=?';
       var dbPass=connection.query(Query,[email],function(err,rows,fields)
       {
         if(err)
