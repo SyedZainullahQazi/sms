@@ -5,8 +5,8 @@ class timetableModel
 {
     static insert_timetable=function(obj)
     {
-        var Query='insert into timetable (rollnum,fullname,day,slot1,slot2,slot3,slot4,slot5,slot6) values (?,?,?,?,?,?,?,?,?)';
-        connection.query(Query,[obj.rollnums,obj.fullnames,obj.days,obj.slot1,obj.slot2,obj.slot3,obj.slot4,obj.slot5,obj.slot6],function(err,rows,fields)
+        var Query='insert into timetable (rollnum,fullname,day,team,slot1,slot2,slot3,slot4,slot5,slot6) values (?,?,?,?,?,?,?,?,?,?)';
+        connection.query(Query,[obj.rollnums,obj.fullnames,obj.days,obj.teams,obj.slot1,obj.slot2,obj.slot3,obj.slot4,obj.slot5,obj.slot6],function(err,rows,fields)
         {  
             if (err)
             {

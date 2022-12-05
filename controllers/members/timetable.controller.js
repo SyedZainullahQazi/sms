@@ -15,6 +15,7 @@ class timetableController
         let {dayname,slotOne,slotTwo,slotThree,slotFour,slotFive,slotSix}=req.body;
         let userRollnum=req.session.rollnum;
         let userFullname=req.session.fullname;
+        let team=req.session.team;
 
         if ( typeof slotOne !== 'undefined' && slotOne )slotOne="free"; else slotOne="notfree";
         if ( typeof slotTwo !== 'undefined' && slotTwo )slotTwo="free"; else slotTwo="notfree";
@@ -34,7 +35,8 @@ class timetableController
             slot6:slotSix,
             rollnums:userRollnum,
             fullnames:userFullname,
-            days:dayname
+            days:dayname,
+            teams:team
         }
 
         timetableDb.insert_timetable(obj);
@@ -86,13 +88,16 @@ class timetableController
     {
         let day=req.params.day;
         let rollnum=req.session.rollnum;
-        let obj={rollnums:rollnum,days:day};
+        let team=req.session.team;
+
+        let obj={rollnums:rollnum,days:day,teams:team};
 
 
         timetableDb.view_timetable(obj).then(function (rows) 
         {
             if (rows.length > 0) 
             {
+                
                 res.render("./member/view-table.ejs", { dayname: day,timetable:rows});
             }
             else

@@ -11,6 +11,7 @@ const adminAddMember=require("../controllers/admin/admin-addMember.controller");
 const adminMemberCrud=require("../controllers/admin/admin-memberCrud.controller");
 const adminEmailManager=require("../controllers/admin/admin-emailManager.controller");
 const adminEventManager=require("../controllers/admin/admin-eventManager.controller");
+const adminTimetableManager=require("../controllers/admin/admin-timetableManager.controller");
 
 //member
 const memberDash=require("../controllers/members/member-dashboard.controller");
@@ -93,6 +94,15 @@ Router.post("/sendmail",adminEmailManager.post_sendmail);
 Router.post("/generate-report",adminDash.post_genReport);
 Router.get("/generate-report",adminDash.genReport);
 
+
+//                     TIMETABLE
+Router.get("/member-timetable/:day/:slot",adminTimetableManager.render_memberTimetable);
+
+
+
+
+
+
 //------------------------------------------------------------------------//
 //                                EVENT MANAGER                           //
 //------------------------------------------------------------------------//
@@ -129,3 +139,7 @@ Router.get("/view-timetable/:day",timetableCont.render_timetable);
 //                               USER INFO                                  //
 //--------------------------------------------------------------------------//
 Router.get("/user-info",memberDash.render_userInfo);
+
+
+Router.get("/approval-reqs",memberDash.render_approvalReq);
+Router.post("/approval-reqs",memberDash.post_approvalReq);

@@ -32,9 +32,9 @@ class siginController
             req.session.isAuth=true;
             req.session.rollnum=rows[0].rollnum;
             req.session.fullname=rows[0].fullname;
+            req.session.team=rows[0].team;
 
-
-            if(rows[0].role=="member")
+            if(rows[0].role=="member"&& rows[0].pendingStatus!=1)
             {
               req.session.role="member";
               res.redirect("member-dashboard");

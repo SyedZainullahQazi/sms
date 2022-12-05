@@ -36,6 +36,29 @@ class memberDash
             console.log(error);
         })
     }
+
+    static render_approvalReq(req,res)
+    {
+        memberDb.get_pending().then(
+            function(rows)
+            {
+                if(rows.length>0)
+                {
+                    res.render("./admin/approval-req.ejs",{std:rows});
+                }
+            },
+            function(error)
+            {
+                console.log(error);
+            })
+    }
+
+    static post_approvalReq(req,res)
+    {
+        let {approve}=req.body;
+        memberDb.update_pending(approve);
+        res.redirect("/approval-reqs");
+    }
 }
 
 module.exports=memberDash;
