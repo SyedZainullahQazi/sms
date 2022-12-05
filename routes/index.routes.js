@@ -8,6 +8,7 @@ const blog=require("../controllers/general/blog.controller");
 //admin
 const adminDash=require("../controllers/admin/admin-dashboard.controller");
 const adminAddMember=require("../controllers/admin/admin-addMember.controller");
+const adminMemberCrud=require("../controllers/admin/admin-memberCrud.controller");
 //member
 const memberDash=require("../controllers/members/member-dashboard.controller");
 
@@ -31,23 +32,25 @@ const memberDash=require("../controllers/members/member-dashboard.controller");
 //-----------------------------------------------------------------------------//
 //                              ADMIN ROUTES                                   //
 //-----------------------------------------------------------------------------//
-              //****************************************************//
-              //                 ADMIN DASHBOARD                    //
-              //****************************************************// 
+ 
+//                 ADMIN DASHBOARD                    // 
  Router.get("/admin-dashboard",adminDash.isAuth,adminDash.render_adminDash);
-              //****************************************************//
-              //                 ADMIN COMPOSE BLOGPOST             //
-              //****************************************************// 
+
+//                 ADMIN COMPOSE BLOGPOST             //
  Router.get("/compose-blog-post",adminDash.isAuth,adminDash.render_composeBlogPost);
  Router.post("/compose-blog-post",adminDash.getBlogPost);
-              //****************************************************//
-              //                 ADMIN MANAGE MEMBERS               //
-              //****************************************************// 
+
+//                 ADMIN MANAGE MEMBERS               //
 Router.get("/manage-members",adminDash.isAuth,adminDash.render_manageMembers);
-              //****************************************************//
-              //                 ADMIN ADD MEMBERS                  //
-              //****************************************************//
+
+//                 ADMIN ADD MEMBERS                  //
 Router.get("/add-member",adminDash.isAuth,adminAddMember.render_addMember);
 Router.post("/add-member",adminAddMember.admin_registerMember);
+
+//                 ADMIN CRUD SCREEN
+Router.get("/view-members",adminMemberCrud.render_memberCrud);
+
+Router.get("/view-members/:var",adminMemberCrud.render_team);
+Router.post("/view-members/:var",adminMemberCrud.redirect_team);
 
 module.exports=Router;
