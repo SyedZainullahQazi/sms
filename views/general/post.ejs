@@ -9,6 +9,43 @@
     <body>
         <h1><%=heading%></h1>
         <p><%=content%></p>
+        <br>
+  
+
+
+        
+        <% if(comment.isAuth==true && (comment.role=="admin"||comment.role=="member")){%>
+            <hr>
+            <div>
+            <form method="post" action="/add-comment">
+            <input type="text" class="form-control" name="comment"  placeholder="Comment Here" required>
+            <input type="hidden" name="title" value=<%=heading%> >
+            <br>
+            <button type="submit" class="btn btn-primary" style="float:right;padding-left:49.5%;padding-right:45%;text-align:center;">Comment</button>
+            </form>
+            </div>
+        <%}%>
+
+        <hr style="margin-top: 5.0rem;">
+        <div>
+            <h4>Comments</h4>
+            <br>
+        </div>
+
+        <div>
+        <%comments.forEach(function (element){%>
+            <h4><%=element.rollnum%></h4> 
+            <br> 
+            <p><%=element.comment%></p>
+            <button value= <%=element.commentId%> type="submit" class="btn">update</button>
+            <button value= <%=element.commentId%> type="submit" class="btn">delete</button>  
+            <hr>
+        <%})%>
+        </div>
+        
+
+
+            
     </body>
 </html>
 

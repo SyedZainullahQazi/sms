@@ -1,0 +1,33 @@
+
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>BLOG | ADMIN</title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+<%- include('../partials/admin/header') -%>
+<h1>Compose</h1>
+
+<form action="/sendmail" method="post">
+    <label>Sending Mail to </label>
+    <input type="text" class="form-control" name="email"  required>
+    <br><br>
+    <label>Email Subject</label>
+    <br><br>
+    <input type="text" name="emailSubject" placeholder="Title" class="form-control">
+    <br><br>
+    <label>Compose Email</label>
+    <textarea name="emailContent" rows="5" cols="30" class="form-control" placeholder="Type Email Text Here"></textarea>
+    <br><br>
+    <button  name="emailBtn" type="submit" class="btn btn-success" >Send Mail</button>
+</form>
+
+<%- include('../partials/admin/footer') -%>
+</body>
+</html>
+
+
+

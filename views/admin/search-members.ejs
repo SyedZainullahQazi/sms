@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+    <head>
+       <title>SEARCH | FCAP</title>
+       <meta charset="utf-8"> 
+    </head> 
+    <body>
+        <%- include('../partials/admin/header') -%>
+        <br><br>
+        <div class="form-group row">
+            <form action="/search-member" method="post">
+            <label class="col-sm-2 col-form-label " style="text-align:right">ROLL NUMBER</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" name="rollnum"  placeholder="f200000" required>
+            </div>
+            <div class="col-sm-2">
+            <button  name="submit" type="submit" class="btn btn-success">search</button>
+            </div>
+            </form>
+        </div>
+
+        <div class="row" style="text-align:center">
+            <% if (member.length>0) { %>
+            <div class="col-sm-6">
+                <p>Roll Number<p>
+                <p>Fullname</p>
+                <p>Email</p>
+                <p>CGPA</p>
+                <p>Whatsapp</p>
+                <p>Gender</p>
+                <p>Role</p>
+            </div>
+            <div class="col-sm-6">
+                <p><%=member[0].rollnum %></p>
+                <p><%=member[0].fullname %></p>
+                <p><%=member[0].email%></p>
+                <p><%=member[0].cgpa%></p>
+                <p><%=member[0].whatsapp%></p>
+                <p><%=member[0].gender%></p>
+                <p><%=member[0].role%></p>
+            </div>
+            <%}%>
+        </div>
+       
+
+        
+
+
+
+        <%- include('../partials/admin/footer') -%>
+    </body>
+</html>

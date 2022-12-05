@@ -13,7 +13,7 @@ class siginController
         if(req.session.isAuth==true && req.session.role=="admin")
         {res.render("./admin/admin-dashboard.ejs");}
         else if(req.session.isAuth==true && req.session.role=="member")
-        {res.render("./admin/member-dashboard.ejs");}
+        {res.render("./member/member-dashboard.ejs");}
         else
         {res.render("student_login.ejs");}
     }

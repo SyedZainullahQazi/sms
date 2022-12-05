@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Latest compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous"
+    />
+
+    <!-- Optional theme -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+      integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+      crossorigin="anonymous"
+    />
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+      integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+      crossorigin="anonymous"
+    ></script>
+
+    <title>FCAP MEMBER | MANAGER</title>
+
+    <style>
+      .inline-80 {
+        display: inline-block;
+        width: 80px;
+      }
+    </style>
+  </head>
+  <body>
+    <%-include("../partials/admin/header")-%>
+    <div>&nbsp;</div>
+
+    <div>&nbsp;</div>
+
+    <div>&nbsp;</div>
+
+    <div class="container" id="listing">
+      <h3>FCAP</h3>
+      <table class="table table-striped">
+        <thead>
+            <th>Event Name</th>
+            <th>Creator Rollnum</th>
+            <th>Creator Name</th>
+            <th>Operations</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%event.forEach(function(element){%>
+          <tr>
+            <td><%=element.eventName%></td>
+            <td><%=element.rollnum%></td>
+            <td><%=element.fullname%></td>
+            <td>
+              <!--Roll no-->
+              <form method="post" action="/edit-event" style="display:inline">
+              <button value=<%=element.eventId%> name="edit" type="submit" class="btn btn-primary" >Edit</button>
+              </form>
+
+              <form method="post" action="/delete-event" style="display:inline">
+                <button value=<%=element.eventId%> name="del" type="submit" class="btn btn-danger" >delete</button>
+              </form>
+              
+              <a href="#" class="btn btn-info">view</a>
+            </td>
+          </tr>
+          <%})%>
+        </tbody>
+      </table>
+    </div>
+
+    <div>
+      <nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+  </ul>
+</nav>
+    </div>
+
+    <center>
+    <form method="post" action="/generate-report" style="display:inline">
+      <button  name="edit"type="submit" class="btn btn-danger" >generate report</button>
+    </form>
+    </center>
+
+    <%-include("../partials/admin/footer")-%>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>
+
+
