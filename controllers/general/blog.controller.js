@@ -62,7 +62,9 @@ class blog {
                   heading: elements.title, 
                   content: elements.blogPost,
                    comment: commentObj,
-                   comments:blogcomments }); 
+                   comments:blogcomments, 
+                   rollnum:req.session.rollnum
+                  }); 
 
               },function(errors)
               {
@@ -102,8 +104,35 @@ class blog {
       // This function get called, when error
       console.log(error);
     });
-
   }
+  
+  static post_getUpdateId(req,res)
+  {
+    let {commentId}=req.body;
+    let string = encodeURIComponent(commentId);
+    res.redirect("/update-comment?id="+string);
+  }
+  static render_updateComment(req,res)
+  {
+    let commentId=req.query.id;
+
+    res.render("./admin/update-comment.ejs",{id:commentId});
+  }
+  static post_updateComment(req,res)
+  {
+    let {comment,commentId}=req.body;
+    blogDb.updateComment(comment,commentId);
+    res.redirect("/blog");
+  }
+  static deleteComment(req,res)
+  {
+    let {commentId}=req.body;
+    blogDb.deleteComment(commentId);
+    
+    res.redirect(req.get('referer'));
+  }
+
+
   //---------------------------------------------------------//
   //             COMMENTS                                    //
   //---------------------------------------------------------//

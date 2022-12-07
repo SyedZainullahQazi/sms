@@ -2,6 +2,23 @@ const bodyParser = require("body-parser");
 const express = require("express");
 const session=require("express-session");
 const app = express();
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  socket.on('chat message', (msg) => {
+    io.emit('chat message', msg);
+
+    console.log("Message : "+msg);
+  });
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+  
+});
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -37,6 +54,6 @@ app.use('/public', express.static('public'));
 
 
 
-app.listen(3000, function() {
+server.listen(3000, function() {
   console.log("Server Has been Started on Port 3000")
 })

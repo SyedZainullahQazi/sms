@@ -16,6 +16,9 @@ const adminTimetableManager=require("../controllers/admin/admin-timetableManager
 //member
 const memberDash=require("../controllers/members/member-dashboard.controller");
 const timetableCont=require("../controllers/members/timetable.controller");
+const memberEventCont=require("../controllers/members/event.controller");
+//genral
+const chatCont=require("../controllers/general/chat.controller");
 
 
 //-------------------------------------------------------------------------------//
@@ -30,7 +33,14 @@ const timetableCont=require("../controllers/members/timetable.controller");
  Router.get("/blog",blog.render_blog);
  Router.get("/posts/:var",blog.render_blogPost);
  Router.post("/add-comment",blog.post_comment);
- Router.get("/blog-manager",blog.render_blogManager);
+ Router.get("/blog-manager",adminDash.isAuth,blog.render_blogManager);
+
+ Router.post("/getUpdateId",blog.post_getUpdateId);
+ Router.get("/update-comment",blog.render_updateComment);
+ Router.post("/update-comment",blog.post_updateComment);
+
+ Router.post("/delete-comment",blog.deleteComment);
+ 
  //-----------------------------------------------------------------------------//
  //                          MEMBER ROUTES                                      //
  //----------------------------------------------------------------------------//
@@ -41,64 +51,71 @@ const timetableCont=require("../controllers/members/timetable.controller");
 //                              ADMIN ROUTES                                   //
 //-----------------------------------------------------------------------------//
  
-//                 ADMIN DASHBOARD                    // 
+//----------------------------------------------------//
+//                 ADMIN DASHBOARD                    //
+//----------------------------------------------------// 
  Router.get("/admin-dashboard",adminDash.isAuth,adminDash.render_adminDash);
 
+//----------------------------------------------------// 
 //                 ADMIN COMPOSE BLOGPOST             //
+//----------------------------------------------------// 
  Router.get("/compose-blog-post",adminDash.isAuth,adminDash.render_composeBlogPost);
- Router.post("/compose-blog-post",adminDash.getBlogPost);
+ Router.post("/compose-blog-post",adminDash.isAuth,adminDash.getBlogPost);
 
+//----------------------------------------------------// 
 //                 ADMIN MANAGE MEMBERS               //
+//----------------------------------------------------// 
 Router.get("/manage-members",adminDash.isAuth,adminDash.render_manageMembers);
-
+//----------------------------------------------------// 
 //                 ADMIN ADD MEMBERS                  //
+//----------------------------------------------------// 
 Router.get("/add-member",adminDash.isAuth,adminAddMember.render_addMember);
 Router.post("/add-member",adminAddMember.admin_registerMember);
-
+//----------------------------------------------------// 
 //                 ADMIN CRUD SCREEN
-Router.get("/view-members",adminMemberCrud.render_memberCrud);
+//----------------------------------------------------// 
+Router.get("/view-members",adminDash.isAuth,adminMemberCrud.render_memberCrud);                    //add auth
+ 
+Router.get("/view-members/:var",adminDash.isAuth,adminMemberCrud.render_team);                    //add auth
+Router.post("/view-members/:var",adminDash.isAuth,adminMemberCrud.redirect_team);                 //add auth
 
-Router.get("/view-members/:var",adminMemberCrud.render_team);
-Router.post("/view-members/:var",adminMemberCrud.redirect_team);
+Router.post("/edit-member",adminDash.isAuth,adminMemberCrud.post_editMember);                     //add auth
+Router.get("/edit-member",adminDash.isAuth,adminMemberCrud.editMember);          //add auth
 
-Router.post("/edit-member",adminMemberCrud.post_editMember);
-Router.get("/edit-member",adminDash.isAuth,adminMemberCrud.editMember);
+Router.post("/update-member",adminDash.isAuth,adminMemberCrud.updateMember);                      //add auth
 
-Router.post("/update-member",adminMemberCrud.updateMember);
-
-Router.post("/delete-member",adminMemberCrud.post_deleteMember);
-Router.get("/delete-member",adminMemberCrud.deleteMember);
-
-
-Router.get("/search-members",adminMemberCrud.render_searchMember);
-Router.get("/search-member",adminMemberCrud.searchMember);
-Router.post("/search-member",adminMemberCrud.post_searchMember);
+Router.post("/delete-member",adminDash.isAuth,adminMemberCrud.post_deleteMember);                 //add auth
+Router.get("/delete-member",adminDash.isAuth,adminMemberCrud.deleteMember);                       //add auth
 
 
-
-
-
-
-//               ADMIN EMAIL MANAGER
+Router.get("/search-members",adminDash.isAuth,adminMemberCrud.render_searchMember);               //add auth
+Router.get("/search-member",adminDash.isAuth,adminMemberCrud.searchMember);                       //add auth   
+Router.post("/search-member",adminDash.isAuth,adminMemberCrud.post_searchMember);                 //add auth
+                        //auth = adminDash.isAuth
+//----------------------------------------------------// 
+//               ADMIN EMAIL MANAGER                  //
+//----------------------------------------------------// 
 Router.get("/email-manager",adminDash.isAuth,adminDash.render_emailManager);
-Router.get("/email-teacher",adminEmailManager.emailTeacher);
+Router.get("/email-teacher",adminDash.isAuth,adminEmailManager.emailTeacher);
 
 
-Router.get("/send-mail-to-teacher",adminEmailManager.render_sendMailToTeacher);
+Router.get("/send-mail-to-teacher",adminDash.isAuth,adminEmailManager.render_sendMailToTeacher);
 Router.post("/mailinfo",adminEmailManager.post_getMailInfo);
 
-Router.get("/send-mail-to-anyone",adminEmailManager.render_sendMailToAnyone);
-
+Router.get("/send-mail-to-anyone",adminDash.isAuth,adminEmailManager.render_sendMailToAnyone);
 Router.post("/sendmail",adminEmailManager.post_sendmail);
 
 Router.post("/generate-report",adminDash.post_genReport);
 Router.get("/generate-report",adminDash.genReport);
 
 
-//                     TIMETABLE
-Router.get("/member-timetable/:day/:slot",adminTimetableManager.render_memberTimetable);
+//----------------------------------------------------// 
+//                     TIMETABLE                      //
+//----------------------------------------------------// 
+Router.get("/member-timetable/:day/:slot",adminDash.isAuth,adminTimetableManager.render_memberTimetable);
 
 
+//genenral (chat,blog)
 
 
 
@@ -106,16 +123,16 @@ Router.get("/member-timetable/:day/:slot",adminTimetableManager.render_memberTim
 //------------------------------------------------------------------------//
 //                                EVENT MANAGER                           //
 //------------------------------------------------------------------------//
-Router.get("/event-manager",adminEventManager.render_eventManager);
-Router.get("/add-event",adminEventManager.addEvent);
+Router.get("/event-manager",adminDash.isAuth,adminEventManager.render_eventManager);
+Router.get("/add-event",adminDash.isAuth,adminEventManager.addEvent);
 Router.post("/add-event",adminEventManager.post_addEvent);
 
-Router.get("/event-crud",adminEventManager.render_eventCrud);
+Router.get("/event-crud",adminDash.isAuth,adminEventManager.render_eventCrud);
 Router.post("/delete-event",adminEventManager.deleteEvent);
 
 
 Router.post("/edit-event",adminEventManager.editEvent);
-Router.get("/edit-event",adminEventManager.render_editEvent);
+Router.get("/edit-event",adminDash.isAuth,adminEventManager.render_editEvent);
 Router.post("/update-event",adminEventManager.updateEvent);
 
 module.exports=Router;
@@ -125,21 +142,36 @@ module.exports=Router;
 //                                TIMETABLE MANAGER                       //
 //------------------------------------------------------------------------//
 
-Router.get("/register-timetable/:day",timetableCont.render_registerTimetable);
+Router.get("/register-timetable/:day",memberDash.isAuth,timetableCont.render_registerTimetable);
 Router.post("/register-timetable",timetableCont.post_registerTimetable);
 
-Router.get("/timetable-manager",timetableCont.render_timetableManager);
+Router.get("/timetable-manager",memberDash.isAuth,timetableCont.render_timetableManager);
 
-Router.get("/update-timetable",timetableCont.render_updateTimetable);
+Router.get("/update-timetable",memberDash.isAuth,timetableCont.render_updateTimetable);
 Router.post("/update-timetable",timetableCont.updateTimetable);
 
-Router.get("/view-timetable/:day",timetableCont.render_timetable);
+Router.get("/view-timetable/:day",memberDash.isAuth,timetableCont.render_timetable);
 
 //--------------------------------------------------------------------------//
 //                               USER INFO                                  //
 //--------------------------------------------------------------------------//
-Router.get("/user-info",memberDash.render_userInfo);
+Router.get("/user-info",memberDash.isAuth,memberDash.render_userInfo);
 
 
-Router.get("/approval-reqs",memberDash.render_approvalReq);
-Router.post("/approval-reqs",memberDash.post_approvalReq);
+Router.get("/approval-reqs",adminDash.isAuth,memberDash.render_approvalReq);
+Router.post("/approval-reqs",adminDash.isAuth,memberDash.post_approvalReq);
+//---------------------------------------------------------------------------//
+//                                    view event                             //
+//---------------------------------------------------------------------------//
+Router.get("/view-event",memberEventCont.render_event);
+Router.get("/view-event/:var",memberEventCont.render_event_post);
+
+//-----------------------------------------------------------------------------//
+//                                      Chat                                   //
+//-----------------------------------------------------------------------------//
+Router.get("/chatadmin",adminDash.isAuth,chatCont.render_chat);
+Router.get("/chatmember",memberDash.isAuth,chatCont.render_chat);
+
+
+//----------------------------------------------------------------------------//
+Router.get("/signout-admin",adminDash.isAuth,adminDash.destroySession);

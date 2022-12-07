@@ -80,6 +80,28 @@ class blogDb
             console.log("1 record inserted in comments");  
         }); 
     }
+
+    static updateComment(comment,commentId)
+    {
+      var Query='update `blogcomments` set comment=? where commentId=?';
+      var dbPass=connection.query(Query,[comment,commentId],function(err,rows,fields)
+      {  
+        if (err) throw err;  
+        console.log("1 record updated");  
+      });
+    }
+
+    static deleteComment(commentId)
+    {
+      var Query='delete from `blogcomments` where commentId=? ';
+      var dbPass=connection.query(Query,[commentId],function(err,rows,fields)
+      {  
+        if (err)
+        throw err;  
+        
+        console.log("1 record deleted");  
+      });
+    }
 }
 
 module.exports=blogDb;

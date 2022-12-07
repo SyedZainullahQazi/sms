@@ -6,7 +6,14 @@ class memberDash
     {
         if(req.session.isAuth==true && req.session.role=="member")
         {
-            next();
+            if(req.session.pendingStatus==0)
+            {
+                next();
+            }
+            else
+            {
+                res.send("Your Application of Registration is Pending Wait For Admin Reply");
+            }
         }
         else
         {

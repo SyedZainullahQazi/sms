@@ -1,0 +1,20 @@
+<%- include('../partials/admin/header') -%>
+
+<form action="/update-comment" method="post">
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">EVENT DETAILS</label>
+    <div class="col-sm-8">
+        <textarea name="comment" rows="5" cols="30" class="form-control" placeholder="Type Your Event Details"></textarea>
+    </div>
+</div>
+
+<input type="hidden" value=<%=id%> name="commentId" class="form-control" >
+
+
+
+<center>
+<button type="submit" class="btn btn-primary" style="padding-left:15.5rem;padding-right:15.5rem;text-align:center;">UPDATE COMMENT</button>
+</center>
+</form>
+
+<%- include('../partials/admin/footer') -%>

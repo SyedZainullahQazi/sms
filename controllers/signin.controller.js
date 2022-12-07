@@ -11,11 +11,22 @@ class siginController
     static render_signin=function(req,res)
     {
         if(req.session.isAuth==true && req.session.role=="admin")
-        {res.render("./admin/admin-dashboard.ejs");}
-        else if(req.session.isAuth==true && req.session.role=="member")
-        {res.render("./member/member-dashboard.ejs");}
+        {res.redirect("/admin-dashboard");}
+        else if(req.session.isAuth==true && req.session.role=="member" )
+        {
+          if(req.session.pendingStatus==0)
+          {
+            res.render("./member/member-dashboard.ejs");
+          }
+          else
+          {
+            res.render("student_login.ejs");
+          }
+        }
         else
-        {res.render("student_login.ejs");}
+        {
+          res.render("student_login.ejs");
+        }
     }
     //--------------------------------------------//
     //Authenticate User Pass and role and redirect//
@@ -23,21 +34,26 @@ class siginController
     static signin=function(req,res)
     {
       var {email,password}=req.body;
-      signinDb.checkUser(email,password).then(function(rows)
+      signinDb.checkUser(email).then(function(rows)
       {
         if(rows.length>0)
         {
+          console.log(password);
           if(rows[0].password==password)
           {
             req.session.isAuth=true;
             req.session.rollnum=rows[0].rollnum;
             req.session.fullname=rows[0].fullname;
+            req.session.email=rows[0].email;
+            req.session.password=rows[0].password;
             req.session.team=rows[0].team;
 
-            if(rows[0].role=="member"&& rows[0].pendingStatus!=1)
+            if(rows[0].role=="member" )
             {
               req.session.role="member";
-              res.redirect("member-dashboard");
+              req.session.pendingStatus=rows[0].pendingStatus;
+
+              res.redirect("/member-dashboard");
             }
             else if(rows[0].role=="admin")
             {
@@ -45,22 +61,18 @@ class siginController
               req.session.role="admin";
               res.redirect("admin-dashboard");
             }
-            else if(rows[0].role=="mentor")
-            {
-              req.session.role="mentor";
-            }
           }
-          else
+          else 
           {
-            console.log("Auth Check Failed : "+authCheck);
-            res.send("UnAuthorized - Wrong Password");
+            res.send("UnAuthorized - Wrong Password (Please Try Again)");
             req.session.isAuth=false;
           }
+          
         }
         else
         {
           req.session.isAuth=false;
-          res.send("No such User");
+          res.send("No such User Exsist - Retry Login With Registered Email");
         }
 
       },function(error)

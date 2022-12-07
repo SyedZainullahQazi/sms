@@ -5,11 +5,19 @@
     <head>
         <title>Post</title>
         <meta charset="utf-8">
+        <style>
+            .center{
+                display: flex;
+                align-items: center;
+                justify-content: right;
+            }
+        </style>
     </head>
     <body>
         <h1><%=heading%></h1>
         <p><%=content%></p>
         <br>
+
   
 
 
@@ -37,8 +45,19 @@
             <h4><%=element.rollnum%></h4> 
             <br> 
             <p><%=element.comment%></p>
-            <button value= <%=element.commentId%> type="submit" class="btn">update</button>
-            <button value= <%=element.commentId%> type="submit" class="btn">delete</button>  
+            <% if(rollnum==element.rollnum){%>
+
+            <div class="center">
+                <form action="/getUpdateId" method="post">
+                    <button value= <%=element.commentId%> type="submit" name="commentId" class="btn" style="display:inline-block">update</button>
+                    </form>
+        
+                    <form action="/delete-comment" method="post">
+                    <button value= <%=element.commentId%> type="submit" name="commentId" class="btn" style="display:inline-block">delete</button>
+                    </form>
+            </div>
+
+            <%}%>  
             <hr>
         <%})%>
         </div>

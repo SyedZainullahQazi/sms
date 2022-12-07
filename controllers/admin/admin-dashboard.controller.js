@@ -1,4 +1,5 @@
 const blogpostDb=require("../../models/admin/compose-blog-post.model");
+const adminDashDb=require("../../models/admin/adminDash.model");
 var q = require('q');
 const { render } = require("ejs");
 const puppeteer = require("puppeteer");
@@ -19,7 +20,7 @@ class adminDash
         }
         else
         {
-            res.redirect("signin");
+            res.redirect("/signin");
         }
     }
 
@@ -28,9 +29,43 @@ class adminDash
     //-----------------------------------------------------------//
     static render_adminDash(req,res)
     {
-    
-
-        res.render("./admin/admin-dashboard.ejs");
+        var teamArr=[0,0,0,0,0];     //0 tech  1 market 2 logistics 3 admin 4 finance
+        adminDashDb.get_team().then(function(rows)
+        {
+          if(rows.length>0)
+          {
+            for(let i=0;i<rows.length;i++)
+            {
+              if(rows[i].team=="Technical Team")
+              {
+                teamArr[0]=teamArr[0]+1;
+              }
+              else if(rows[i].team=="Marketing Team")
+              {
+                teamArr[1]=teamArr[1]+1;
+              }
+              else if(rows[i].team=="Logistics Team")
+              {
+                teamArr[2]=teamArr[2]+1;
+              }
+              else if(rows[i].team=="Admin Team")
+              {
+                teamArr[3]=teamArr[3]+1;
+              }
+              else if(rows[i].team=="Finance Team")
+              {
+                teamArr[4]=teamArr[4]+1;
+              }
+            }
+            console.log("Technical Members : "+teamArr[0])
+            res.render("./admin/admin-dashboard.ejs",{teams:teamArr});
+          }
+        },
+        function(error)
+        {
+          console.log(error);
+        })
+       
     }
     //-----------------------------------------------------------//
     //                    RENDER COMPOSE BLOG POST               //
@@ -66,21 +101,22 @@ class adminDash
    //------------------------------------------------------------//
    static post_genReport=async function(req,res)
    {
-      const browser = await puppeteer.launch({headless:true});
+      const browser = await puppeteer.launch({headless:false});
       const page = await browser.newPage();
 
-     
+      await page.goto("http://localhost:3000/signin");
+      //type into email
+
+      await page.type('#email',"f200328@cfd.nu.edu.pk");
+      
+      //type into password
+      await page.type("#password","fastnuces3") ;
+
+      await page.click('#send')
+
+    //   await page.goto("http://localhost:3000/view-members?",{waitUntil:'networkidle2'});
 
       await page.goto("http://localhost:3000/view-members",{waitUntil:'networkidle2'});
-    //   await page.click('#email');
-    //   await page.waitForNavigation({waitUntil:'networkidle2'});
-    //   await page.type("f200328@cfd.nu.edu.pk");
-    //   await page.click('#password');
-    //   await page.waitForNavigation({waitUntil:'networkidle2'});
-    //   await page.type("fastnuces3");
-    //   await page.click('#send')
-    //   await page.waitForNavigation({waitUntil:'networkidle2'});
-    //   await page.goto("http://localhost:3000/view-members?",{waitUntil:'networkidle2'});
     
     names=await page.evaluate(()=>
     {
@@ -106,7 +142,7 @@ class adminDash
      rollnums.length=0;
      teams.length=0;
 
-     await page.pdf({
+     var pdfdoc=await page.pdf({
        path:"./views/admin/pdf/totalMembers/"+pdfname,
        format:'A4'
      })
@@ -114,12 +150,20 @@ class adminDash
      console.log("report saved");
      await browser.close();
 
-     res.redirect("/view-members");
+    
+     res.download("./views/admin/pdf/totalMembers/"+pdfname);
    }
 
    static genReport=async function(req,res)
    { 
      await res.render("./admin/memberTemplate.ejs",{memberNames:names,memberTeams:teams,memberRollnums:rollnums});
+   }
+
+   //-------------------------------------------------------//
+   static destroySession=function(req,res)
+   {
+     req.session.destroy();
+     res.redirect("/signin");
    }
 }
 

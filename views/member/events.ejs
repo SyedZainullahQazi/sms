@@ -1,0 +1,14 @@
+<%- include('../partials/member/header') -%>
+
+<h1>EVENTS</h1>
+
+
+<%posts.forEach(function(element){%>
+<h1><%=element.eventName%></h1>
+<p><%=element.eventDetails.substring(0,20)+"..."%>   
+<a href="view-event/<%=element.eventId%>">Read More</a>
+</p>
+<%})%>
+
+
+<%- include('../partials/member/footer') -%>

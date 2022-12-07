@@ -3,7 +3,7 @@ var q = require('q');
 
   class signin
   {
-    static checkUser(email,password)
+    static checkUser(email)
     {
       var deferred = q.defer();
       var Query='SELECT password,role,rollnum,fullname,team,pendingStatus FROM `members` WHERE email=?';

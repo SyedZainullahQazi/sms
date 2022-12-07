@@ -3,10 +3,55 @@
     <head>
        <title>Admin Dashboard</title>
        <meta charset="utf-8"> 
+       <style>
+        #myChart{
+            width: 700px !important;
+            height: 350px !important;
+        }
+       </style>
     </head> 
     <body>
         <%- include('../partials/admin/header') -%>
         <h1>Welcome to Admin Dashboard</h1>
+        <input type="hidden" value=<%=teams[0]%> id="technical">
+        <input type="hidden" value=<%=teams[1]%> id="marketing">
+        <input type="hidden" value=<%=teams[2]%> id="logistics">
+        <input type="hidden" value=<%=teams[3]%> id="admin">
+        <input type="hidden" value=<%=teams[4]%> id="finance">
+        <div>
+            <canvas id="myChart"></canvas>
+          </div>
+          
+          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+          
+          <script>
+            const ctx = document.getElementById('myChart');
+            const technical=document.getElementById('technical');
+            const marketing=document.getElementById('marketing');
+            const logistics=document.getElementById('logistics');
+            const admin = document.getElementById('admin');
+            const finance=document.getElementById('finance');
+
+            new Chart(ctx, {
+              type: 'bar',
+              data: {
+                labels: ['TECHNICAL', 'MARKETING', 'LOGISTICS', 'FINANCE', 'ADMIN'],
+                datasets: [{
+                  label: '# of Members',
+                  data: [technical.value,marketing.value,logistics.value,admin.value,finance],
+                  borderWidth: 0.5
+                }]
+              },
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true
+                  }
+                }
+              }
+            });
+          </script>
+
         <%- include('../partials/admin/footer') -%>
     </body>
 </html>
