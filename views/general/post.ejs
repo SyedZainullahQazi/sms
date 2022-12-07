@@ -11,11 +11,21 @@
                 align-items: center;
                 justify-content: right;
             }
+            .right{
+                display: inline-block;
+                align-items: center;
+                justify-content: right;
+            }
         </style>
     </head>
     <body>
         <h1><%=heading%></h1>
         <p><%=content%></p>
+        <div class="right">
+            <p><b>Author Name</b> :<%=author%></p>
+            
+            <p><b>Posted On : </b><%=date%></p>
+        </div>
         <br>
 
   
@@ -49,11 +59,11 @@
 
             <div class="center">
                 <form action="/getUpdateId" method="post">
-                    <button value= <%=element.commentId%> type="submit" name="commentId" class="btn" style="display:inline-block">update</button>
+                    <button value= <%=element.commentId%> type="submit" name="commentId" class="btn btn-info" style="display:inline-block">update</button>
                     </form>
         
                     <form action="/delete-comment" method="post">
-                    <button value= <%=element.commentId%> type="submit" name="commentId" class="btn" style="display:inline-block">delete</button>
+                    <button value= <%=element.commentId%> type="submit" name="commentId" class="btn btn-danger" style="display:inline-block">delete</button>
                     </form>
             </div>
 

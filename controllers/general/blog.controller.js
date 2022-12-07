@@ -12,10 +12,14 @@ class blog {
           let postx =
           {
             title: "",
-            blogPost: ""
+            blogPost: "",
+            author:"",
+            date:""
           };
           postx.title = rows[i].title;
           postx.blogPost = rows[i].post;
+          postx.author=rows[i].authorName;
+          postx.date=rows[i].date;
           allPosts.push(postx);
         }
         res.render("./general/blog.ejs", { posts: allPosts });
@@ -38,9 +42,12 @@ class blog {
     blogDb.getBlogData().then(function (rows) {
       if (rows.length > 0) {
         for (let i = 0; i < rows.length; i++) {
-          let postx = { blogPost: "", title: "" };
+          let postx = { blogPost: "", title: "",author:"",date:""};
           postx.blogPost = rows[i].post;
           postx.title = rows[i].title;
+          postx.author=rows[i].authorName;
+          postx.date=rows[i].date;
+
 
           allPosts.push(postx);
         }
@@ -59,8 +66,10 @@ class blog {
               blogDb.getComments(rows[0].blogId).then(function(blogcomments)
               {
                 res.render('./general/post.ejs', { 
-                  heading: elements.title, 
-                  content: elements.blogPost,
+                   heading: elements.title, 
+                   content: elements.blogPost,
+                   date:elements.date,
+                   author:elements.author,
                    comment: commentObj,
                    comments:blogcomments, 
                    rollnum:req.session.rollnum
@@ -128,7 +137,7 @@ class blog {
   {
     let {commentId}=req.body;
     blogDb.deleteComment(commentId);
-    
+
     res.redirect(req.get('referer'));
   }
 

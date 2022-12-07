@@ -81,6 +81,7 @@ class adminDash
     {
         var {blogTitle,blogPost}=req.body;
         blogpostDb.insertBlogPost(blogTitle,blogPost,req.session.rollnum,req.session.fullname);
+        res.redirect("/compose-blog-post");
     }
     //-----------------------------------------------------------//
     //         MANAGE MEMBERS RENDERING                          //
@@ -101,7 +102,7 @@ class adminDash
    //------------------------------------------------------------//
    static post_genReport=async function(req,res)
    {
-      const browser = await puppeteer.launch({headless:false});
+      const browser = await puppeteer.launch({headless:true});
       const page = await browser.newPage();
 
       await page.goto("http://localhost:3000/signin");
