@@ -66,6 +66,11 @@ class memberDash
         memberDb.update_pending(approve);
         res.redirect("/approval-reqs");
     }
+    static destroySession=function(req,res)
+   {
+     req.session.destroy();
+     res.redirect("/signin");
+   }
 }
 
 module.exports=memberDash;

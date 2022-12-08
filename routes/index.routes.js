@@ -19,6 +19,7 @@ const timetableCont=require("../controllers/members/timetable.controller");
 const memberEventCont=require("../controllers/members/event.controller");
 //genral
 const chatCont=require("../controllers/general/chat.controller");
+const forgetPassword=require("../controllers/general/forgetPassword.controller");
 
 
 //-------------------------------------------------------------------------------//
@@ -106,7 +107,7 @@ Router.get("/send-mail-to-anyone",adminDash.isAuth,adminEmailManager.render_send
 Router.post("/sendmail",adminEmailManager.post_sendmail);
 
 Router.post("/generate-report",adminDash.post_genReport);
-Router.get("/generate-report",adminDash.genReport);
+Router.get("/generate-report",adminDash.isAuth,adminDash.genReport);
 
 
 //----------------------------------------------------// 
@@ -175,3 +176,13 @@ Router.get("/chatmember",memberDash.isAuth,chatCont.render_chat);
 
 //----------------------------------------------------------------------------//
 Router.get("/signout-admin",adminDash.isAuth,adminDash.destroySession);
+Router.get("/signout-member",memberDash.isAuth,memberDash.destroySession);
+
+//-----------------------------------------------------------------------------//
+//                             Forget Pasword                                  //
+//-----------------------------------------------------------------------------//
+Router.get("/forget-password",forgetPassword.render_forgetPassword);
+Router.post("/forget-password",forgetPassword.post_forgetPassword);
+
+Router.get("/verify-authpin",forgetPassword.render_verifyAuthPin);
+Router.post("/verify-authpin",forgetPassword.post_verifyAuthPin);
