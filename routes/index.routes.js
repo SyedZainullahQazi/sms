@@ -186,3 +186,8 @@ Router.post("/forget-password",forgetPassword.post_forgetPassword);
 
 Router.get("/verify-authpin",forgetPassword.render_verifyAuthPin);
 Router.post("/verify-authpin",forgetPassword.post_verifyAuthPin);
+
+//-----------------------------------------------------------------------------//
+//                              HOME FILE                                      //
+//-----------------------------------------------------------------------------//
+Router.get("/",signinCont.render_home);

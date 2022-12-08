@@ -81,6 +81,11 @@ class siginController
         console.log(error);
       });
     }
+
+    static render_home(req,res)
+    {
+       res.render("./home.ejs");
+    }
 }
 
 module.exports=siginController;
